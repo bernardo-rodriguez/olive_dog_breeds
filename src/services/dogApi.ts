@@ -18,11 +18,22 @@ export async function fetchDogBreeds(page: number = 1): Promise<{
     }
     
     const data: DogsApiResponse = await response.json();
+    const breeds = data.breeds || [];
+    
+    // Check if there might be a next page by making a request for the next page
+    let hasNextPage = false;
+    if (breeds.length > 0) {
+      const nextPageResponse = await fetch(`${API_URL}?page=${page + 1}&limit=${BREEDS_PER_PAGE}`);
+      if (nextPageResponse.ok) {
+        const nextPageData: DogsApiResponse = await nextPageResponse.json();
+        hasNextPage = nextPageData.breeds && nextPageData.breeds.length > 0;
+      }
+    }
     
     return { 
-      dogBreeds: data.breeds || [], 
+      dogBreeds: breeds, 
       error: false,
-      hasNextPage: data.next_page || false,
+      hasNextPage,
       currentPage: data.page || page
     };
   } catch (error) {
