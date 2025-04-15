@@ -49,10 +49,11 @@ function App() {
       <main>
         {isLoading ? (
           <p>Loading dog breeds...</p>
-        ) : isError ? (
-          <p>Error loading from API. Showing fallback data.</p>
         ) : (
           <>
+            {isError && (
+              <p>Error loading from API. Showing fallback data.</p>
+            )}
             <div className="dog-breeds-container">
               {dogBreeds.map((dog, index) => (
                 <div key={`${dog.breed}-${index}`} className="dog-card">
@@ -68,29 +69,31 @@ function App() {
               ))}
             </div>
             
-            <div className="pagination-controls">
-              {currentPage > 1 && (
-                <button 
-                  className="pagination-button prev" 
-                  onClick={handlePrevPage}
-                  disabled={isLoading}
-                >
-                  ← Previous
-                </button>
-              )}
-              
-              <span className="page-indicator">Page {currentPage}</span>
-              
-              {hasNextPage && (
-                <button 
-                  className="pagination-button next" 
-                  onClick={handleNextPage}
-                  disabled={isLoading}
-                >
-                  Next →
-                </button>
-              )}
-            </div>
+            {!isError && (
+              <div className="pagination-controls">
+                {currentPage > 1 && (
+                  <button 
+                    className="pagination-button prev" 
+                    onClick={handlePrevPage}
+                    disabled={isLoading}
+                  >
+                    ← Previous
+                  </button>
+                )}
+                
+                <span className="page-indicator">Page {currentPage}</span>
+                
+                {hasNextPage && (
+                  <button 
+                    className="pagination-button next" 
+                    onClick={handleNextPage}
+                    disabled={isLoading}
+                  >
+                    Next →
+                  </button>
+                )}
+              </div>
+            )}
           </>
         )}
       </main>
