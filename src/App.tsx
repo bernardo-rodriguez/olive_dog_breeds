@@ -52,7 +52,7 @@ function App() {
         ) : (
           <>
             {isError && (
-              <p>Error loading from API. Showing fallback data.</p>
+              <p>Error loading from Server. Showing fallback data.</p>
             )}
             <div className="dog-breeds-container">
               {dogBreeds.map((dog, index) => (
