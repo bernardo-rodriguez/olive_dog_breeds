@@ -7,4 +7,5 @@ export interface DogsApiResponse {
   breeds: DogBreed[];
   page: number;
   totalPages: number;
+  error?: string;
 }
